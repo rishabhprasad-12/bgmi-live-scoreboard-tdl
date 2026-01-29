@@ -1,4 +1,4 @@
 export const SHEET_URL =
-  "https://opensheet.elk.sh/1Wp0rDs3U7TPqE1a_bPLx80dkjDKi_twWDq7575Uznig/Sheet1";
+  "https://script.google.com/macros/s/AKfycbwnIJGMpAY5jSnyECKDWy3_KW1Rg9SDdO_5fnlnxKWd9skn64Td_wyxaXX_NfeAr59ipw/exec";
 
 export const REFRESH_TIME = 5000; // 5 seconds
