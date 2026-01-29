@@ -7,23 +7,32 @@ export default function ScoreTable() {
   const [teams, setTeams] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData =  async () => {
       try {
-        const res = await fetch(`${SHEET_URL}?t=${Date.now()}`, {
-          cache: "no-store",
-        });
+        console.log("Fetching started...");
+
+        const res = await fetch(SHEET_URL);
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
 
         const data = await res.json();
+        console.log("Fetched data:", data);
 
-        if (!Array.isArray(data)) return;
+        if (!Array.isArray(data)) {
+          console.error("Data is not array", data);
+          return;
+        }
 
-        const sorted = [...data].sort(
+        const sortedData = [...data].sort(
           (a, b) => Number(b.total) - Number(a.total),
         );
 
-        setTeams(sorted);
-      } catch (err) {
-        console.error("Fetch failed", err);
+        setTeams(sortedData); 
+        console.log("Teams state updated");
+      } catch (error) {
+        console.error("Fetch error", error);
       }
     };
 
@@ -31,7 +40,6 @@ export default function ScoreTable() {
     const interval = setInterval(fetchData, REFRESH_TIME);
     return () => clearInterval(interval);
   }, []);
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-black text-white p-6">
